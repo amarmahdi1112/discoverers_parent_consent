@@ -675,8 +675,6 @@ export default function Admin() {
           </div>
         </div>
       </div>
+      </div>
     );
   }
-
-  return null;
-}

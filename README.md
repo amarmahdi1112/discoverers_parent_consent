@@ -1,16 +1,40 @@
-# Daycare Consent Form Application
+# Discoverers' Daycare - Parent Consent Form Application
 
-A modern, full-stack web application for collecting daycare consent forms with digital signatures. Built with Next.js, TypeScript, Prisma, tRPC, and Tailwind CSS.
+A complete, professional-grade web application for managing daycare consent forms with digital signatures, statistics tracking, and comprehensive admin tools. Built with Next.js, TypeScript, Prisma, tRPC, and Tailwind CSS.
 
-## Features
+## ✨ Features
 
-- ✅ Beautiful, responsive form interface
-- ✅ Digital signature capture
-- ✅ Form validation
-- ✅ Database storage (PostgreSQL)
-- ✅ Admin dashboard to view submissions
-- ✅ Password-protected admin access
-- ✅ Easy deployment to Vercel
+### Parent-Facing Features
+- ✅ **Beautiful, responsive form** with Discoverers' Daycare branding
+- ✅ **Digital signature capture** with touch/mouse support
+- ✅ **Real-time form validation** with helpful error messages
+- ✅ **Date constraints** to prevent invalid entries
+- ✅ **Mobile-friendly** design that works on all devices
+- ✅ **Thank you page** with submission confirmation
+
+### Admin Dashboard Features
+- 📊 **Statistics Dashboard** with real-time metrics:
+  - Total submissions count
+  - Permissions granted count
+  - Photo/video release count
+- 🔍 **Advanced Search** - Find submissions by child name, parent name, or phone number
+- 🎯 **Smart Filtering** - Filter by permission status (all/granted/denied)
+- 📑 **Flexible Sorting** - Sort by submission date or child's name
+- 📥 **CSV Export** - Download all submissions as spreadsheet
+- 📄 **Professional PDF Download** - Beautifully formatted consent documents
+- 🗑️ **Delete Functionality** - Remove submissions with confirmation
+- 🔐 **Password Protection** - Secure admin access
+- 📱 **Responsive Design** - Works perfectly on all screen sizes
+- 🎨 **Modern UI** - Clean, professional interface with Tailwind CSS
+
+### Technical Features
+- ✅ **TypeScript** for type safety
+- ✅ **tRPC** for end-to-end type-safe APIs
+- ✅ **Prisma ORM** for database management
+- ✅ **SQLite** for local development (PostgreSQL for production)
+- ✅ **Server-side validation** for security
+- ✅ **Optimistic updates** for better UX
+- ✅ **Easy Vercel deployment** with one-click setup
 
 ## Tech Stack
 
@@ -157,18 +181,48 @@ npx prisma db push
 
 ### For Parents
 
-1. Visit your deployed URL
-2. Fill out the form with all required information
-3. Sign using the signature pad
+1. Visit your deployed URL (e.g., `https://your-app.vercel.app`)
+2. Fill out the consent form with all required information:
+   - Child's information
+   - Parent/guardian details
+   - Emergency contact
+   - Medical information
+   - Permissions and authorizations
+3. Sign using the digital signature pad
 4. Click "Submit Consent Form"
-5. You'll see a confirmation message
+5. You'll see a confirmation message with the Discoverers' Daycare branding
 
 ### For Administrators
 
-1. Visit `https://your-url.vercel.app/admin`
-2. Enter the admin password
-3. View all submissions in a table
-4. Click "View Details" on any submission to see the full form including the signature
+1. **Access the Admin Dashboard**
+   - Visit `https://your-url.vercel.app/admin`
+   - Enter the admin password (default: `admin123`)
+
+2. **View Statistics**
+   - See total submissions count
+   - Track permissions granted
+   - Monitor photo/video releases
+
+3. **Search & Filter**
+   - Use the search bar to find specific submissions by name or phone
+   - Filter by permission status (all/granted/denied)
+   - Sort by date or child's name alphabetically
+
+4. **Manage Submissions**
+   - Click "View Details" to see complete submission information
+   - Download individual submissions as professionally formatted PDFs
+   - Delete submissions with confirmation (permanent action)
+
+5. **Export Data**
+   - Click "Export to CSV" to download all submissions as a spreadsheet
+   - Perfect for record-keeping or data analysis
+
+6. **PDF Features**
+   - Each PDF includes Discoverers' Daycare branding
+   - Gold accent lines for professional appearance
+   - Digital signature embedded in document
+   - Document ID for tracking
+   - Electronic signing timestamp
 
 ## Project Structure
 
