@@ -1,0 +1,29 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Submission {
+  id                        String   @id @default(cuid())
+  childFullName             String
+  childDateOfBirth          DateTime
+  parentFullName            String
+  parentPhoneNumber         String
+  emergencyContactInfo      String
+  allergiesMedicalConditions String
+  permissionToParticipate   Boolean
+  emergencyMedicalAuth      Boolean
+  photoVideoRelease         Boolean
+  signature                 String
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  @@index([createdAt])
+}
