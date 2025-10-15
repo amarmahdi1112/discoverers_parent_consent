@@ -37,23 +37,33 @@ export default function Admin() {
     const pageHeight = doc.internal.pageSize.getHeight();
     let yPos = 15;
 
-    // Header with colored background
+    // Header with gradient-style colored background
     doc.setFillColor(79, 70, 229); // Indigo color
-    doc.rect(0, 0, pageWidth, 35, "F");
+    doc.rect(0, 0, pageWidth, 45, "F");
     
-    // Title
+    // Daycare Name
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(24);
+    doc.setFontSize(26);
     doc.setFont("helvetica", "bold");
-    doc.text("DAYCARE CONSENT FORM", pageWidth / 2, 15, { align: "center" });
+    doc.text("DISCOVERERS' DAYCARE", pageWidth / 2, 15, { align: "center" });
     
-    doc.setFontSize(11);
+    // Subtitle
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text("Parent Consent Form", pageWidth / 2, 26, { align: "center" });
+    
+    doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    doc.text("Official Parent/Guardian Authorization Document", pageWidth / 2, 25, { align: "center" });
+    doc.text("Official Authorization Document", pageWidth / 2, 35, { align: "center" });
+    
+    // Decorative line under header
+    doc.setDrawColor(251, 191, 36); // Amber/Gold color
+    doc.setLineWidth(2);
+    doc.line(0, 45, pageWidth, 45);
     
     // Reset text color
     doc.setTextColor(0, 0, 0);
-    yPos = 45;
+    yPos = 55;
 
     // Helper function for section headers
     const addSectionHeader = (title: string) => {
@@ -177,18 +187,23 @@ export default function Admin() {
     doc.text(`Document ID: ${selectedData.id}`, 20, yPos);
 
     // Footer
-    doc.setDrawColor(79, 70, 229);
-    doc.setLineWidth(0.8);
-    doc.line(15, pageHeight - 25, pageWidth - 15, pageHeight - 25);
+    doc.setDrawColor(251, 191, 36); // Gold line
+    doc.setLineWidth(1.5);
+    doc.line(15, pageHeight - 30, pageWidth - 15, pageHeight - 30);
+    
+    doc.setFontSize(10);
+    doc.setTextColor(79, 70, 229);
+    doc.setFont("helvetica", "bold");
+    doc.text("Discoverers' Daycare", pageWidth / 2, pageHeight - 22, { align: "center" });
     
     doc.setFontSize(8);
     doc.setTextColor(107, 114, 128);
-    doc.setFont("helvetica", "italic");
-    doc.text("This is an official daycare consent document.", pageWidth / 2, pageHeight - 18, { align: "center" });
-    doc.text(`Generated on ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, pageWidth / 2, pageHeight - 12, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.text("This is an official consent document. Please retain a copy for your records.", pageWidth / 2, pageHeight - 16, { align: "center" });
+    doc.text(`Document generated on ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, pageWidth / 2, pageHeight - 10, { align: "center" });
 
     // Save the PDF
-    const fileName = `Consent_${selectedData.childFullName.replace(/\s+/g, "_")}_${new Date().toISOString().split("T")[0]}.pdf`;
+    const fileName = `Discoverers_Daycare_Consent_${selectedData.childFullName.replace(/\s+/g, "_")}_${new Date().toISOString().split("T")[0]}.pdf`;
     doc.save(fileName);
   };
 

@@ -77,7 +77,7 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
         <Head>
-          <title>Thank You - Daycare Consent Form</title>
+          <title>Thank You - Discoverers' Daycare</title>
         </Head>
         <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
           <div className="mb-6">
@@ -85,9 +85,10 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">Thank You!</h1>
+          <h1 className="text-3xl font-bold text-indigo-600 mb-2">Thank You!</h1>
+          <p className="text-lg font-medium text-gray-700 mb-4">Discoverers' Daycare</p>
           <p className="text-gray-600 mb-6">
-            Your consent form has been submitted successfully. We have received your information and will keep it on file.
+            Your consent form has been submitted successfully. We have received your information and will keep it on file securely.
           </p>
           <button
             onClick={() => setSubmitted(false)}
@@ -103,17 +104,24 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Daycare Consent Form</title>
-        <meta name="description" content="Daycare parent consent and authorization form" />
+        <title>Discoverers' Daycare - Consent Form</title>
+        <meta name="description" content="Discoverers' Daycare parent consent and authorization form" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-            <div className="bg-gradient-to-r from-indigo-600 to-blue-600 px-8 py-6">
-              <h1 className="text-3xl font-bold text-white text-center">
-                Daycare Consent & Authorization Form
-              </h1>
+            <div className="bg-gradient-to-r from-indigo-600 to-blue-600 px-8 py-8">
+              <div className="text-center space-y-2">
+                <h1 className="text-4xl font-bold text-white">
+                  Discoverers' Daycare
+                </h1>
+                <div className="h-1 w-32 bg-amber-400 mx-auto rounded-full"></div>
+                <p className="text-xl text-blue-100 font-medium pt-2">
+                  Parent Consent & Authorization Form
+                </p>
+              </div>
             </div>
 
             <form onSubmit={handleSubmit} className="px-8 py-8 space-y-6">
