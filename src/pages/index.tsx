@@ -77,7 +77,7 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
         <Head>
-          <title>Thank You - Discoverers' Daycare</title>
+          <title>Thank You - Daycare Consent Form</title>
         </Head>
         <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center">
           <div className="mb-6">
@@ -85,10 +85,9 @@ export default function Home() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold text-indigo-600 mb-2">Thank You!</h1>
-          <p className="text-lg font-medium text-gray-700 mb-4">Discoverers' Daycare</p>
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">Thank You!</h1>
           <p className="text-gray-600 mb-6">
-            Your consent form has been submitted successfully. We have received your information and will keep it on file securely.
+            Your consent form has been submitted successfully. We have received your information and will keep it on file.
           </p>
           <button
             onClick={() => setSubmitted(false)}

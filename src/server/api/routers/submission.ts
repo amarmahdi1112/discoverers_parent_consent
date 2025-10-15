@@ -47,4 +47,23 @@ export const submissionRouter = createTRPCRouter({
         where: { id: input.id },
       });
     }),
+
+  delete: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.submission.delete({
+        where: { id: input.id },
+      });
+    }),
+
+  getStats: publicProcedure.query(async ({ ctx }) => {
+    const total = await ctx.db.submission.count();
+    const withPermissions = await ctx.db.submission.count({
+      where: { permissionToParticipate: true },
+    });
+    const withPhotoRelease = await ctx.db.submission.count({
+      where: { photoVideoRelease: true },
+    });
+    return { total, withPermissions, withPhotoRelease };
+  }),
 });
