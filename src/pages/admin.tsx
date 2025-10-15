@@ -34,96 +34,161 @@ export default function Admin() {
 
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
-    let yPos = 20;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    let yPos = 15;
 
+    // Header with colored background
+    doc.setFillColor(79, 70, 229); // Indigo color
+    doc.rect(0, 0, pageWidth, 35, "F");
+    
     // Title
-    doc.setFontSize(20);
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
     doc.setFont("helvetica", "bold");
-    doc.text("Daycare Consent Form", pageWidth / 2, yPos, { align: "center" });
-    yPos += 15;
-
-    // Child Information
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "bold");
-    doc.text("Child Information", 20, yPos);
-    yPos += 8;
-
+    doc.text("DAYCARE CONSENT FORM", pageWidth / 2, 15, { align: "center" });
+    
     doc.setFontSize(11);
     doc.setFont("helvetica", "normal");
-    doc.text(`Child's Full Name: ${selectedData.childFullName}`, 20, yPos);
-    yPos += 7;
-    doc.text(`Date of Birth: ${new Date(selectedData.childDateOfBirth).toLocaleDateString()}`, 20, yPos);
-    yPos += 12;
+    doc.text("Official Parent/Guardian Authorization Document", pageWidth / 2, 25, { align: "center" });
+    
+    // Reset text color
+    doc.setTextColor(0, 0, 0);
+    yPos = 45;
 
-    // Parent/Guardian Information
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "bold");
-    doc.text("Parent/Guardian Information", 20, yPos);
-    yPos += 8;
+    // Helper function for section headers
+    const addSectionHeader = (title: string) => {
+      doc.setFillColor(229, 231, 235); // Light gray
+      doc.roundedRect(15, yPos - 5, pageWidth - 30, 12, 2, 2, "F");
+      doc.setFontSize(13);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(79, 70, 229); // Indigo
+      doc.text(title, 20, yPos + 2);
+      doc.setTextColor(0, 0, 0);
+      yPos += 15;
+    };
 
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Parent's Full Name: ${selectedData.parentFullName}`, 20, yPos);
-    yPos += 7;
-    doc.text(`Phone Number: ${selectedData.parentPhoneNumber}`, 20, yPos);
-    yPos += 7;
-    doc.text(`Emergency Contact: ${selectedData.emergencyContactInfo}`, 20, yPos);
-    yPos += 12;
+    // Helper function for field labels and values
+    const addField = (label: string, value: string, inline: boolean = false) => {
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(107, 114, 128); // Gray
+      doc.text(label, 20, yPos);
+      
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor(0, 0, 0);
+      if (inline) {
+        doc.text(value, 75, yPos);
+        yPos += 7;
+      } else {
+        yPos += 6;
+        const splitText = doc.splitTextToSize(value, pageWidth - 45);
+        doc.text(splitText, 25, yPos);
+        yPos += 6 * splitText.length + 3;
+      }
+    };
 
-    // Medical Information
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "bold");
-    doc.text("Medical Information", 20, yPos);
-    yPos += 8;
+    // Child Information Section
+    addSectionHeader("👶 CHILD INFORMATION");
+    addField("Child's Full Name:", selectedData.childFullName, true);
+    addField("Date of Birth:", new Date(selectedData.childDateOfBirth).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    }), true);
+    yPos += 5;
 
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "normal");
-    const allergies = selectedData.allergiesMedicalConditions || "None";
-    const splitAllergies = doc.splitTextToSize(`Allergies/Medical Conditions: ${allergies}`, pageWidth - 40);
-    doc.text(splitAllergies, 20, yPos);
-    yPos += 7 * splitAllergies.length + 5;
+    // Parent/Guardian Information Section
+    addSectionHeader("👤 PARENT/GUARDIAN INFORMATION");
+    addField("Full Name:", selectedData.parentFullName, true);
+    addField("Phone Number:", selectedData.parentPhoneNumber, true);
+    addField("Emergency Contact:", selectedData.emergencyContactInfo, true);
+    yPos += 5;
 
-    // Permissions
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "bold");
-    doc.text("Permissions & Authorizations", 20, yPos);
-    yPos += 8;
+    // Medical Information Section
+    addSectionHeader("🏥 MEDICAL INFORMATION");
+    const allergies = selectedData.allergiesMedicalConditions || "None reported";
+    addField("Allergies & Medical Conditions:", allergies, false);
+    yPos += 5;
 
-    doc.setFontSize(11);
-    doc.setFont("helvetica", "normal");
-    doc.text(`Permission to Participate: ${selectedData.permissionToParticipate ? "Yes" : "No"}`, 20, yPos);
-    yPos += 7;
-    doc.text(`Emergency Medical Authorization: ${selectedData.emergencyMedicalAuth ? "Yes" : "No"}`, 20, yPos);
-    yPos += 7;
-    doc.text(`Photo/Video Release: ${selectedData.photoVideoRelease ? "Yes" : "No"}`, 20, yPos);
-    yPos += 12;
+    // Permissions Section
+    addSectionHeader("✓ PERMISSIONS & AUTHORIZATIONS");
+    
+    // Create styled checkboxes
+    const addCheckbox = (label: string, checked: boolean) => {
+      // Draw checkbox
+      if (checked) {
+        doc.setFillColor(34, 197, 94); // Green
+        doc.roundedRect(20, yPos - 3, 5, 5, 1, 1, "F");
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(9);
+        doc.text("✓", 21, yPos + 1);
+      } else {
+        doc.setDrawColor(220, 38, 38); // Red
+        doc.setLineWidth(0.5);
+        doc.roundedRect(20, yPos - 3, 5, 5, 1, 1, "S");
+      }
+      
+      // Label
+      doc.setTextColor(0, 0, 0);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(label, 30, yPos);
+      yPos += 8;
+    };
 
-    // Signature
-    doc.setFontSize(14);
-    doc.setFont("helvetica", "bold");
-    doc.text("Signature", 20, yPos);
-    yPos += 8;
+    addCheckbox("Permission to Participate in Activities", selectedData.permissionToParticipate);
+    addCheckbox("Emergency Medical Treatment Authorization", selectedData.emergencyMedicalAuth);
+    addCheckbox("Photo/Video Release Consent", selectedData.photoVideoRelease);
+    yPos += 5;
 
-    // Add signature image
+    // Signature Section
+    addSectionHeader("✍️ PARENT/GUARDIAN SIGNATURE");
+    
+    // Signature box with border
+    doc.setDrawColor(200, 200, 200);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(20, yPos, 90, 35, 2, 2, "S");
+    
     if (selectedData.signature) {
       try {
-        doc.addImage(selectedData.signature, "PNG", 20, yPos, 80, 30);
-        yPos += 35;
+        doc.addImage(selectedData.signature, "PNG", 22, yPos + 2, 86, 31);
       } catch (error) {
-        doc.setFontSize(11);
+        doc.setFontSize(10);
         doc.setFont("helvetica", "italic");
-        doc.text("(Signature image included)", 20, yPos);
-        yPos += 10;
+        doc.setTextColor(107, 114, 128);
+        doc.text("(Signature captured)", 25, yPos + 18);
       }
     }
+    
+    yPos += 40;
+    
+    // Date and authentication info
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(107, 114, 128);
+    doc.text(`Electronically signed on: ${new Date(selectedData.createdAt).toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit"
+    })}`, 20, yPos);
+    yPos += 5;
+    doc.text(`Document ID: ${selectedData.id}`, 20, yPos);
 
-    // Submission date
-    doc.setFontSize(10);
+    // Footer
+    doc.setDrawColor(79, 70, 229);
+    doc.setLineWidth(0.8);
+    doc.line(15, pageHeight - 25, pageWidth - 15, pageHeight - 25);
+    
+    doc.setFontSize(8);
+    doc.setTextColor(107, 114, 128);
     doc.setFont("helvetica", "italic");
-    doc.text(`Submitted: ${new Date(selectedData.createdAt).toLocaleString()}`, 20, yPos);
+    doc.text("This is an official daycare consent document.", pageWidth / 2, pageHeight - 18, { align: "center" });
+    doc.text(`Generated on ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, pageWidth / 2, pageHeight - 12, { align: "center" });
 
     // Save the PDF
-    const fileName = `consent_${selectedData.childFullName.replace(/\s+/g, "_")}_${new Date().toISOString().split("T")[0]}.pdf`;
+    const fileName = `Consent_${selectedData.childFullName.replace(/\s+/g, "_")}_${new Date().toISOString().split("T")[0]}.pdf`;
     doc.save(fileName);
   };
 
